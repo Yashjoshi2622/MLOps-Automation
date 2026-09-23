@@ -20,8 +20,7 @@ jobs:
           python-version: "3.10"
 
       - name: Run MLOps generator
-        run: |
-          python scripts/generate_project.py .
+        run: python scripts/generate_project.py .
 
       - name: Commit generated MLOps files
         env:
@@ -29,12 +28,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
           git add .
-
-          if git diff --cached --quiet; then
-            echo "No new MLOps files to commit."
-          else
-            git commit -m "chore: bootstrap MLOps setup"
-            git push https://x-access-token:${GH_TOKEN}@github.com/Yashjoshi2622/MLOps-Automation.git
-          fi
+          git commit -m "chore: bootstrap MLOps setup" || echo "Nothing to commit"
+          git push https://x-access-token:${GH_TOKEN}@github.com/Yashjoshi2622/MLOps-Automation.git
