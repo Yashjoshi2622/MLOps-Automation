@@ -6,8 +6,10 @@ No secrets or repository-specific values are hard-coded here.
 """
 
 from pathlib import Path
+import sys
 from pydantic_settings import BaseSettings
 
+_CONFIG_DIR = Path(__file__).resolve().parent
 
 class Settings(BaseSettings):
     # ----------------------------------------------------------------
@@ -30,10 +32,21 @@ class Settings(BaseSettings):
     PORT: int = 8080
 
     model_config = {
-        "env_file": ".env",
+        "env_file": str(_CONFIG_DIR / ".env"),
         "case_sensitive": False,
         "extra": "ignore",
     }
 
-
-settings = Settings()
+try:
+    settings = Settings()
+    print("\n--- MLOps Webhook Configuration ---")
+    print(f"GITHUB_APP_ID:           SET")
+    print(f"GITHUB_PRIVATE_KEY_PATH: SET")
+    print(f"GITHUB_WEBHOOK_SECRET:   SET")
+    print(f"MLOPS_AUTOMATION_REPO:   SET")
+    print("-----------------------------------\n")
+except Exception as e:
+    print("\n[ERROR] Failed to load configuration.")
+    print("Make sure you have created D:\\MLOps-Automation\\webhook\\.env and filled in all required fields.")
+    print(f"Details: {e}\n")
+    sys.exit(1)
