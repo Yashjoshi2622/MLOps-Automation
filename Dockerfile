@@ -2,12 +2,12 @@ FROM python:3.10-slim
 
 WORKDIR /app
 
+# Install dependencies first for better layer caching
 COPY requirements.txt .
-
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY src ./src
-COPY models ./models
+# src/ not found — copying entire project
+COPY . .
 
 EXPOSE 8000
 
