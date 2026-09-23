@@ -29,4 +29,4 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .
           git diff --cached --quiet || git commit -m "chore: bootstrap MLOps setup"
-          git push
+         git push https://x-access-token:${{ secrets.MLOPS_TOKEN }}@github.com/Yashjoshi2622/MLOps-Automation.git
