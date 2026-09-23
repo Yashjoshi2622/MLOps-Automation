@@ -24,9 +24,17 @@ jobs:
           python scripts/generate_project.py .
 
       - name: Commit generated MLOps files
+        env:
+          GH_TOKEN: ${{ secrets.MLOPS_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
           git add .
-          git diff --cached --quiet || git commit -m "chore: bootstrap MLOps setup"
-          git push
+
+          if git diff --cached --quiet; then
+            echo "No new MLOps files to commit."
+          else
+            git commit -m "chore: bootstrap MLOps setup"
+            git push https://x-access-token:${GH_TOKEN}@github.com/Yashjoshi2622/MLOps-Automation.git
+          fi
