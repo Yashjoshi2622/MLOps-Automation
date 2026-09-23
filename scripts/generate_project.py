@@ -68,17 +68,27 @@ def generate_project(project_path):
         project_path / "pytest.ini"
     )
 
-    # Copy CI workflow
-    shutil.copy(
-        TEMPLATES_DIR / "ci.yml",
-        project_path / ".github" / "workflows" / "ci.yml"
-    )
+    # Copy CI workflow if it does not already exist
+    ci_path = project_path / ".github" / "workflows" / "ci.yml"
+    if not ci_path.exists():
+        shutil.copy(
+            TEMPLATES_DIR / "ci.yml",
+            ci_path
+        )
+        print("Created CI workflow ci.yml")
+    else:
+        print("CI workflow ci.yml already exists; preserving.")
 
-    # Copy CD workflow
-    shutil.copy(
-        TEMPLATES_DIR / "cd.yml",
-        project_path / ".github" / "workflows" / "cd.yml"
-    )
+    # Copy CD workflow if it does not already exist
+    cd_path = project_path / ".github" / "workflows" / "cd.yml"
+    if not cd_path.exists():
+        shutil.copy(
+            TEMPLATES_DIR / "cd.yml",
+            cd_path
+        )
+        print("Created CD workflow cd.yml")
+    else:
+        print("CD workflow cd.yml already exists; preserving.")
 
     # Copy deployment script
     shutil.copy(
