@@ -1,4 +1,4 @@
-name: CI Pipeline
+﻿name: CI Pipeline
 
 on:
   push:
@@ -25,4 +25,15 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run tests
-        run: pytest
+        run: |
+          # Run pytest; exit code 5 means "no tests collected" which is
+          # acceptable for a brand-new project (smoke test should prevent this).
+          set +e
+          pytest --tb=short -q
+          EXIT_CODE=$?
+          set -e
+          if [ $EXIT_CODE -eq 5 ]; then
+            echo "No tests collected — treating as success for brand-new project."
+            exit 0
+          fi
+          exit $EXIT_CODE

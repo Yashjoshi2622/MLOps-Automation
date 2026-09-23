@@ -1,0 +1,52 @@
+# ============================================================
+# MLOps Automation Framework — .gitignore
+# ============================================================
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+htmlcov/
+.coverage
+*.cover
+
+# --- Virtual environments ---
+venv/
+.venv/
+env/
+.env/
+
+# --- Environment / secrets (NEVER commit these) ---
+.env
+*.pem
+*.key
+*_private_key*
+*secret*
+
+# --- Temporary automation checkout folder ---
+.mlops-automation/
+
+# --- IDE ---
+.vscode/
+.idea/
+*.suo
+*.user
+
+# --- Windows ---
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# --- Docker ---
+.dockerignore
+
+# --- Logs ---
+*.log
